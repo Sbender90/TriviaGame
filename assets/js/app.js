@@ -3,7 +3,8 @@ var triviaQuestions = [
 		question: "What is the longest river in the World?",
 		answerList: ["Nile", "Congo", "Amazon", "Mekong"],
 		answer: 2
-	},{
+	},
+	{
 		question: "What is the largest inland body of water on Earth?",
 		answerList: ["Caspian Sea", "Lake Michigan", "Lake Victoria", "Black Sea"],
 		answer: 0
@@ -49,31 +50,7 @@ var liveQuestion;
 
 
 
-/*
 
-what the button group should look like when appended to the page
-
-
-
-<div class="btn-toolbar" data-toggle="buttons">
-    <label class="btn btn-primary">
-        <input type="radio" name="optionsA" id="option1" autocomplete="off" value="1"> OPT 1
-    </label>
-    <label class="btn btn-primary">
-        <input type="radio" name="optionsA" id="option2" autocomplete="off" value="2"> OPT 2
-    </label>
-    <label class="btn btn-primary">
-        <input type="radio" name="optionsA" id="option3" autocomplete="off" value="3"> OPT 3
-    </label>
-    <label class="btn btn-primary">
-        <input type="radio" name="optionsA" id="option4" autocomplete="off" value="4"> OPT 4
-    </label>
-    <label class="btn btn-primary">
-        <input type="radio" name="optionsA" id="option5" autocomplete="off" value="5"> OPT 5
-    </label>
-</div>
-
-*/
 
 
 
@@ -83,7 +60,7 @@ what the button group should look like when appended to the page
 // append buttons and my answers
 $("#startBtn").on("click", function(){
 	$("#startGame").addClass("hide");
-	$("#timeWrap, #finishGam").removeClass("hide");
+	$("#timeWrap, #finishGame").removeClass("hide");
 	createHTML();
 })
 
@@ -94,10 +71,25 @@ $("#startBtn").on("click", function(){
 	// loop through the option availble for each question 
 	// create an elemetn and add properties
 // display all questions and options with 1 timer at once
+
+/*
+
+
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+</div>
+
+
+
+*/
+
+
+
 function createHTML(){
 	triviaQuestions
-	// loop through the triviaQuestions array 
+	// loop through the triviaQuestions array objects
 	for(var i = 0;i < triviaQuestions.length; i++){
+		console.log("current object in outer loop", i);
 		// current triva object
 		//console.log(triviaQuestions[i]);
 		var $question = $("<h2>"); 
@@ -105,41 +97,61 @@ function createHTML(){
 		$question.attr("data-qgroup",i);
 		$question.addClass("question");
 		$("#questionsWrap").append($question);
-		//console.log($question);
-		// other option for creating a element
-		//var question = "<h2>"+triviaQuestions[i].question+"</h2>"
-
-		// vcreate the container for all the button options
-		//<div class="btn-toolbar" data-toggle="buttons">
-
+		
+		// create the container for all the button options
+		// var buttonWrap = `<div class="btn-toolbar" data-toggle="buttons">`;
+		var buttonWrap = $("<div>");
+		buttonWrap.addClass("btn-group");
+		buttonWrap.attr("role","group");
+		buttonWrap.attr("aria-label","Basic example");
+		
 		//loop through options 
-
-		for(var j = 0; j< triviaQuestions[1].answerList.length;j++){
-
-	// 		<div class="btn-toolbar" data-toggle="buttons">
-    // <label class="btn btn-primary">
-    //     <input type="radio" name="optionsA" id="option1" autocomplete="off" value="1"> OPT 1
-    // </label>
-			
+		//loop through the length of the answerL:ist array
+		for(var j = 0; j< triviaQuestions[i].answerList.length;j++){
+			console.log("these options belong to the current object in the first loop", i, "this is the", j, "option in the anserList array which is a array that lives inside the object")
 			// create buttons
 			// append to container created outside of for loop
 			// each button should have a group attr and a unique id
+				 //<button type="button" class="btn btn-secondary">Left</button>
+				 var button = $("<button>")
+				 button.attr("type", "button");
+				 button.attr("data-qgroup",+i);
+				 button.attr("value",j);
+				 button.addClass("btn btn-primary");
+				 button.text(triviaQuestions[i].answerList[j]);
+				 $(buttonWrap).append(button)
 		}
+		
+		$("#questionsWrap").append(buttonWrap);
 	}
 }
 
+var answer = [null,null,null,null,null,null,null,null,null];
+//answer.splice(index, number of items replacing, what you are replacing with);
 
-// on click of finish evaluate if each button selected is correct
+// use splice method to replace null with an actual value
+// create a click event that gets thewn value of the data attibute data-qgroup which is a number which represents the index that the value will be pushed to.
+// gets the value from the button clicked
+// save the value to the answers array at the value of the data-qgroup
+
+
+// on click of finish evaluate if each button selected is correct (answer array check against the triviaQuestions .answer)
 // update game data accordingly
-// display final data
+// displat final data
+
+// evaluate answers array also if the user runs out of time
 
 
-
-
+// timer will start and text will show (time) when start is clicked
 // create a timer
+// set interval every x amount of seconds
+// deduct from time every x second in interval function
+// update the text everytime the number what 
 	// if time out disable buttons,
 	// remove page contents 
 	// dispaly final data 
+
+	// when counter hits 0 interval should stop or when the user clicks finish
 
 
 
