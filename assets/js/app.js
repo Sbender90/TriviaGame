@@ -40,11 +40,12 @@ var triviaQuestions = [
 ];
 
 var currentQuestion
-var counter;
+var number = 5;
 var right;
 var wrong;
-var timer;
+var timer = true;
 var liveQuestion;
+var intervalId;
 
 
 
@@ -54,13 +55,17 @@ var liveQuestion;
 
 
 
-/* Ambers code*/
+
+
 
 // start game - game logic function
 // append buttons and my answers
 $("#startBtn").on("click", function(){
 	$("#startGame").addClass("hide");
 	$("#timeWrap, #finishGame").removeClass("hide");
+	oneMinute();
+
+	
 	createHTML();
 })
 
@@ -128,7 +133,8 @@ function createHTML(){
 
 var answer = [null,null,null,null,null,null,null,null,null];
 //answer.splice(index, number of items replacing, what you are replacing with);
-
+answer.splice(2);
+console.log(answer);
 // use splice method to replace null with an actual value
 // create a click event that gets thewn value of the data attibute data-qgroup which is a number which represents the index that the value will be pushed to.
 // gets the value from the button clicked
@@ -140,14 +146,34 @@ var answer = [null,null,null,null,null,null,null,null,null];
 // displat final data
 
 // evaluate answers array also if the user runs out of time
-//setTimeout(function(){ alert("Hello"); }, 3000);
 
 // timer will start and text will show (time) when start is clicked
 // create a timer
-setTimeout(function() {
-	alert('Times Up!'); }, 
-	3000);
-	$("#timer").append(setInterval, 1000);
+
+	$('#startBtn').on('click', oneMinute);
+	$('#finishGame').on('click', stop);
+
+	function oneMinute() {
+		clearInterval(intervalId);
+		intervalId = setInterval(decrement, 1000);
+	  }
+
+	  function decrement() {
+		  number--;
+	  
+
+	  $("#timer").html("<h3>" + number + "</h3>");
+
+	  if (number === 0) {
+		  stop(); 
+		  alert("Times Up!")
+		  }
+	  }
+
+	  function stop() {
+		  clearInterval(intervalId);
+	  }
+
 
 // set interval every x amount of seconds
 // deduct from time every x second in interval function
@@ -161,54 +187,9 @@ setTimeout(function() {
 
 
 
-/*end Amber's code*/
 
-$('#startBtn').on('click', function () {
-		$(this).hide();
-		// not hiding the text
-		$("#my-4").hide();
-		newGame();
-	});
 
-	function newGame() {
-			$('#finalMessage').empty();
-			$('#rightAnswer').empty();
-			$('#wrongAnswers').empty();
-			
-			counter = 0;
-			right = 0;
-			wrong = 0;
-			unanswered = 0;
-			liveQuestion = 0;
-			
-		}
-	// $('#q-a').html('Question #'+(question+1)+'/'+triviaQuestions.length);
-		
-		
-	// 	for(i = 0; i <= 8; i++) {
-	// 		console.log(i);
-	// 	}
-		
-	// 		$('<h2>').text("question: " + [i]);
-		
-// trying this not working not sure what the syntax is
-			function newQuestion(){
-				$('#message').empty();
-				$('#right').empty();
-				answered = true;
-				
-				//trying to dynamically generate questions witht his mess
-				$('#liveQuestion').html('Question #'+(liveQuestion+1)+'/'+triviaQuestions.length);
-				$('#liveQuestion').html('<h2>' + triviaQuestions[liveQuestion].question + '</h2>');
-				for(var i = 0; i < 4; i++){
-					var choices = $('<div>');
-					choices.text(triviaQuestions[liveQuestion].answerList[i]);
-					choices.attr({'data-index': i });
-					choices.addClass('thisChoice');
-					$('#answerBtn').append(choices);
-				};
-			};
-				
+
 
 
 
