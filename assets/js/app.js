@@ -140,10 +140,15 @@ var answer = [null,null,null,null,null,null,null,null,null];
 // displat final data
 
 // evaluate answers array also if the user runs out of time
-
+//setTimeout(function(){ alert("Hello"); }, 3000);
 
 // timer will start and text will show (time) when start is clicked
 // create a timer
+setTimeout(function() {
+	alert('Times Up!'); }, 
+	3000);
+	$("#timer").append(setInterval, 1000);
+
 // set interval every x amount of seconds
 // deduct from time every x second in interval function
 // update the text everytime the number what 
