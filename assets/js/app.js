@@ -40,7 +40,7 @@ var triviaQuestions = [
 ];
 
 var currentQuestion
-var number = 5;
+var number = 60;
 var right;
 var wrong;
 var timer = true;
