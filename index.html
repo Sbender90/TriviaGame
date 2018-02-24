@@ -13,17 +13,19 @@
     <div class="contentWrap" align="center">
         
         <div class="jumbotron">
-            <h1 class="display-4">Geography Trivia</h1>
-            <p class="lead">Try and answer as many questions as you can in the time allowed.</p>
-            <hr class="my-4">
+            <div id="header">
+                <img src="assets/images/map.png">
+                <h1 class="display-4">Geography Trivia</h1>
+                <p class="lead">Try and answer as many questions as you can in the time allowed.</p>
+                <hr class="my-4">
+            </div>
             <div id="startGame">
                 <p>To begin press start!</p>
                 <button class='lead btn btn-primary' id='startBtn'>Start</button>
             </div>
             <div class="row">
                 <div id="timeWrap" class="col-sm-12 sol-md-12 col-lg-12 hide">
-                    <h3>Time Remaining:</h3>
-                    <h3 id="timer"></h3>
+                    <h3>Time Remaining: <span id="timer"></span></h3>
                 </div>
             </div>
         </div>
@@ -33,15 +35,13 @@
                 <div id="questionsWrap" class="col-sm-12 sol-md-12 col-lg-12">
                 </div>
             </div>
-           <!--  <div class="row wrapper">
-                <div id="optionsWrap" class="col-sm-12 col-md-12 col-lg-12">     
-                </div>
-            </div>  -->
+            <div id="alert" class="hide"></div>
             <div id="finishGame" class="row hide">
                 <div class="col-sm-12 col-md-12 col-lg-12">
-                    <button class="btn btn-primary">Finished</button>
+                    <button class="btn btn-success" id="finish">Finished</button>
                 </div>
-            </div>        
+            </div>  
+            <div id="resultsWrap" class="hide"></div>      
         </div>   
         
     </div>

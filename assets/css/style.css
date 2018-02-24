@@ -1,15 +1,19 @@
+body {
+    height: 100vh;
+}
 
 h1, .btn-group {
     margin: 0 auto;
 }
-
+p {
+    color:#000;
+}
 .container {
     width: 100%;
     margin: 0 auto;
 }
 
 .row {
-    height: 30px;
     width: 100%;
     margin: 0 auto;
     
@@ -23,9 +27,99 @@ h1, .btn-group {
 #timer {
     margin: 0 auto;
     width: 100%;
-
 }
-
+.container {
+    padding-top: 5%;
+}
+.btn {
+    padding: 10px 20px;
+    font-size: 18px;
+}
+.question {
+    border-top: 1px solid #ccc;
+    padding-top: 20px
+}
+.question:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
 #answerBtn {
     margin: 0 auto;
 }
+.jumbotron {
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.jumbotron img {
+    width: 40%;
+}
+.jumbotron h1 {
+    margin-top: -15%;
+}
+.jumbotron h3 {
+    margin-bottom: 20px;
+}
+#header hr {
+    margin-top: 8%;
+    border-top: 1px solid #ccc;
+}
+#finish {
+    margin: 20px 0;
+}
+
+#startBtn {
+    margin-bottom: 20px;
+}
+.btn-group button {
+    margin: 2px;
+}
+#questionsWrap .selected {
+    background-color: #3399FF;
+    border: #3399FF 1px solid;
+}
+#resultsWrap {
+    padding-top: 30%;
+}
+.outTime {
+    color: red;
+    margin-top: 5%;
+}
+@media only screen and (max-width: 40em) { 
+    .container {
+        padding-top: 20%;
+    }
+    h2 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+   .btn-group button {
+        border-radius: 3px;
+        margin: 4px;
+        width: 100%;
+    }
+    .btn-group>.btn:not(:first-child):not(:last-child):not(.dropdown-toggle), .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle), .btn-group>.btn:last-child:not(:first-child), .btn-group>.dropdown-toggle:not(:first-child){
+            border-radius: 3px;
+    }
+    .jumbotron img {
+        width: 100%;
+    }
+    
+    .jumbotron h1 {
+        margin-top: -40%;
+    }
+    #header hr {
+        margin-top: 20%;
+    }
+    #startBtn {
+        margin-bottom: 20px;
+    }
+} /* max-width 640px, mobile-only styles, use when QAing mobile issues */
+@media only screen and (min-width: 40.063em) and (max-width: 64em) { 
+    .container {
+        padding-top: 10%;
+    }
+} /* min-width 641px, medium screens */

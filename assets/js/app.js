@@ -39,28 +39,18 @@ var triviaQuestions = [
 	}
 ];
 
-var currentQuestion
-var counter;
-var right;
-var wrong;
-var timer;
-var liveQuestion;
-
-
-
-
-
-
-
-
-
-/* Ambers code*/
-
+var answers = [null,null,null,null,null,null,null,null,null];
+var timeLeft;
 // start game - game logic function
-// append buttons and my answers
+// append questions and options
+// show timer
+// hide header, start game txt and button
 $("#startBtn").on("click", function(){
-	$("#startGame").addClass("hide");
+	$("#resultsWrap").empty();
+	$("#startGame, #resultsWrap").addClass("hide");
+	$("#header").slideUp();
 	$("#timeWrap, #finishGame").removeClass("hide");
+	startTimer();
 	createHTML();
 })
 
@@ -73,23 +63,16 @@ $("#startBtn").on("click", function(){
 // display all questions and options with 1 timer at once
 
 /*
-
-
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-secondary">Left</button>
-</div>
-
-
-
+	<div class="btn-group" role="group" aria-label="Basic example">
+	  <button type="button" class="btn btn-secondary">Left</button>
+	</div>
 */
-
-
 
 function createHTML(){
 	triviaQuestions
 	// loop through the triviaQuestions array objects
 	for(var i = 0;i < triviaQuestions.length; i++){
-		console.log("current object in outer loop", i);
+		//console.log("current object in outer loop", i);
 		// current triva object
 		//console.log(triviaQuestions[i]);
 		var $question = $("<h2>"); 
@@ -108,7 +91,7 @@ function createHTML(){
 		//loop through options 
 		//loop through the length of the answerL:ist array
 		for(var j = 0; j< triviaQuestions[i].answerList.length;j++){
-			console.log("these options belong to the current object in the first loop", i, "this is the", j, "option in the anserList array which is a array that lives inside the object")
+			//console.log("these options belong to the current object in the first loop", i, "this is the", j, "option in the anserList array which is a array that lives inside the object")
 			// create buttons
 			// append to container created outside of for loop
 			// each button should have a group attr and a unique id
@@ -117,7 +100,7 @@ function createHTML(){
 				 button.attr("type", "button");
 				 button.attr("data-qgroup",+i);
 				 button.attr("value",j);
-				 button.addClass("btn btn-primary");
+				 button.addClass("btn btn-primary options");
 				 button.text(triviaQuestions[i].answerList[j]);
 				 $(buttonWrap).append(button)
 		}
@@ -126,20 +109,68 @@ function createHTML(){
 	}
 }
 
-var answer = [null,null,null,null,null,null,null,null,null];
-//answer.splice(index, number of items replacing, what you are replacing with);
-
 // use splice method to replace null with an actual value
+//answer.splice(index, number of items replacing, what you are replacing with);
 // create a click event that gets thewn value of the data attibute data-qgroup which is a number which represents the index that the value will be pushed to.
 // gets the value from the button clicked
 // save the value to the answers array at the value of the data-qgroup
 
+// on click of an option get the value and update the answers array
+// add styling to clicked button
+$(document).on("click", ".options", function(){
+	// remove slected class to any button in clciked button group 
+	var groupNum = $(this).attr("data-qgroup");
+	var ClickValue = $(this).val();
 
-// on click of finish evaluate if each button selected is correct (answer array check against the triviaQuestions .answer)
+	$(`button[data-qgroup="${groupNum}"]`).removeClass("selected");
+
+	// add slected to newly clicked button
+	$(this).addClass("selected");
+	answers.splice(groupNum, 1, ClickValue);
+});
+
+// on click of finish remove and hide game content
+// re-display diplay header and start button 
+$("#finish").on("click", function(){
+	clearInterval(timeLeft);
+	displayResults();
+});
+
+function displayResults(){
+	$("#questionsWrap, #timer, #resultsWrap, #alert").empty();
+	$("#timeWrap, #finishGame, #alert").addClass("hide");
+	$("#startGame, #resultsWrap").removeClass("hide");
+	$("#startBtn").css("display","block");
+	$("#header").slideDown();
+	scoreEvaluation();
+}
+
+// evaluate if each button selected is correct (answer array check against the triviaQuestions at index .answer)
 // update game data accordingly
 // displat final data
+function scoreEvaluation(){
+	var right = 0;
+	var wrong = 0;
+	var counter = 0;
+	for(var i = 0;i < answers.length;i++){
+		var selected = answers[i];
+		//console.log("selected",selected)
+		//console.log(triviaQuestions[i].answer);
+		if(selected == null){
+			counter++;
+		}
+		else if(parseInt(selected) !== triviaQuestions[i].answer){
+			wrong++
+		}
+		else if(parseInt(selected) === triviaQuestions[i].answer){
+			right++;
+		}
+	
+	}
+	var results = `<h2>Right: ${right}</h2><h2>Wrong: ${wrong}</h2><h2>Unanswered: ${counter}/${triviaQuestions.length}</h2`
+	$("#resultsWrap").append(results);
+}
 
-// evaluate answers array also if the user runs out of time
 
 
 // timer will start and text will show (time) when start is clicked
@@ -153,57 +184,34 @@ var answer = [null,null,null,null,null,null,null,null,null];
 
 	// when counter hits 0 interval should stop or when the user clicks finish
 
+// evaluate answers array also if the user runs out of time
+function startTimer(){
+	var timer = 10;
+	$("#timer").append(timer)
+	timeLeft = setInterval(function(){ 
+	$("#timer").empty()
+	// setTimeout(function(){ 
+	// 	--timer; 
 
 
+	// }, 50);
+	--timer;
+	$("#timer").append(timer)
+	if(timer === 0){
+		clearInterval(timeLeft);
+		var msg = "<h1 class='outTime'>OUT OF TIME!</h1>";
+		$("#questionsWrap").empty()
+		$("#finishGame").addClass("hide");
+		$("#alert").append(msg);
+		$("#alert").removeClass("hide")
+		setTimeout(function(){ 
+			displayResults();
+		}, 2000);
+	}
+	
+	}, 1000);
+}
 
-/*end Amber's code*/
-
-$('#startBtn').on('click', function () {
-		$(this).hide();
-		// not hiding the text
-		$("#my-4").hide();
-		newGame();
-	});
-
-	function newGame() {
-			$('#finalMessage').empty();
-			$('#rightAnswer').empty();
-			$('#wrongAnswers').empty();
-			
-			counter = 0;
-			right = 0;
-			wrong = 0;
-			unanswered = 0;
-			liveQuestion = 0;
-			
-		}
-	// $('#q-a').html('Question #'+(question+1)+'/'+triviaQuestions.length);
-		
-		
-	// 	for(i = 0; i <= 8; i++) {
-	// 		console.log(i);
-	// 	}
-		
-	// 		$('<h2>').text("question: " + [i]);
-		
-// trying this not working not sure what the syntax is
-			function newQuestion(){
-				$('#message').empty();
-				$('#right').empty();
-				answered = true;
-				
-				//trying to dynamically generate questions witht his mess
-				$('#liveQuestion').html('Question #'+(liveQuestion+1)+'/'+triviaQuestions.length);
-				$('#liveQuestion').html('<h2>' + triviaQuestions[liveQuestion].question + '</h2>');
-				for(var i = 0; i < 4; i++){
-					var choices = $('<div>');
-					choices.text(triviaQuestions[liveQuestion].answerList[i]);
-					choices.attr({'data-index': i });
-					choices.addClass('thisChoice');
-					$('#answerBtn').append(choices);
-				};
-			};
-				
 
 
 
