@@ -184,7 +184,6 @@ function scoreEvaluation(){
 
 	// when counter hits 0 interval should stop or when the user clicks finish
 
-<<<<<<< HEAD
 // evaluate answers array also if the user runs out of time
 function startTimer(){
 	var timer = 10;
@@ -212,14 +211,11 @@ function startTimer(){
 	
 	}, 1000);
 }
-=======
 
 
 
 
-
->>>>>>> 2bc8a4c237e49dd8aa59d096238f967a1205a1c5
-
+				
 
 
 
